@@ -1,0 +1,97 @@
+Nice — here’s a short **external CSS** you can drop into `style.css` and link from your HTML (`<link rel="stylesheet" href="style.css">`). It matches the inline styles from your Infinity Runner HTML but is a bit cleaner and adds a subtle pulse for the HUD.
+
+```css
+:root{
+  --bg-top: #0b0e17;
+  --bg-bottom: #10182a;
+  --panel: #2a3a5f;
+  --ground: #1a2742;
+  --accent: #56e39f;
+  --danger: #ff6b6b;
+  --text: #ffffff;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,.4);
+  --font: system-ui, Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:var(--font);background:linear-gradient(var(--bg-top),var(--bg-bottom));color:var(--text);-webkit-font-smoothing:antialiased}
+
+.wrap{
+  display:grid;
+  place-items:center;
+  height:100vh;
+  padding:18px;
+}
+
+/* canvas styling */
+canvas#game{
+  width:90%;
+  max-width:960px;
+  height:auto;
+  aspect-ratio: 2.25 / 1; /* keeps the 720x320 feel responsively */
+  background: linear-gradient(var(--bg-top), var(--bg-bottom));
+  border:2px solid var(--panel);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:block;
+}
+
+/* HUD */
+.hud{
+  position:fixed;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  font-weight:700;
+  letter-spacing:.5px;
+  padding:6px 12px;
+  background:rgba(10,14,26,0.25);
+  border-radius:999px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(10,14,26,0.35);
+  font-size:0.95rem;
+  animation: pulseHUD 2.8s linear infinite;
+}
+
+/* subtle pulse for the HUD so it feels alive but not distracting */
+@keyframes pulseHUD{
+  0% { transform: translateX(-50%) scale(1); opacity:1; }
+  50% { transform: translateX(-50%) scale(1.02); opacity:0.95; }
+  100% { transform: translateX(-50%) scale(1); opacity:1; }
+}
+
+.hint{
+  position:fixed;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:.78;
+  font-size:.9rem;
+  user-select:none;
+  background:rgba(8,12,22,0.14);
+  padding:6px 10px;
+  border-radius:10px;
+}
+
+/* responsive adjustments for small screens */
+@media (max-width:420px){
+  .hud{font-size:.85rem;padding:5px 10px}
+  .hint{font-size:.82rem}
+  canvas#game{aspect-ratio: 18 / 9}
+}
+
+/* utility (optional) for a colorful player/obstacle preview when overlaying HTML elements */
+.player-preview{ width:28px; height:28px; background:var(--accent); border-radius:3px; }
+.obstacle-preview{ background:var(--danger); border-radius:2px; }
+
+/* ground stripe style (if you ever render ground as DOM) */
+.ground{
+  background:linear-gradient(90deg, rgba(42,58,95,0.12) 0 8px, transparent 8px);
+  height:32px;
+  border-top:2px solid rgba(0,0,0,0.12);
+}
+```
+
+Want me to convert this into a **compact CSS + external JS + HTML** bundle (three separate files) you can download?
